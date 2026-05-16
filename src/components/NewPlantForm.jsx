@@ -8,12 +8,11 @@ function NewPlantForm({ onAddPlant }) {
   function handleSubmit(e) {
     e.preventDefault();
 
+    // FIXED: Removed parseFloat because the test suite expects the price to be submitted as a string value "10"
     const newPlant = {
-      name,
-      image,
-      price: parseFloat(price),
-      // Note: You can remove 'inStock: true' if your backend json-server 
-      // doesn't track it, as stock status is strictly frontend/non-persisting for this lab.
+      name: name,
+      image: image,
+      price: price
     };
 
     fetch("http://localhost:6001/plants", {
@@ -26,7 +25,6 @@ function NewPlantForm({ onAddPlant }) {
       .then((res) => res.json())
       .then((data) => {
         onAddPlant(data);
-        // FIX: Clear the form fields inside the resolved promise block
         setName("");
         setImage("");
         setPrice("");
